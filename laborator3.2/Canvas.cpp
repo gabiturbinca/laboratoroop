@@ -48,7 +48,7 @@ void Canvas::DrawCircle(int x,int y,int ray, char ch)
     for(int i=0;i<this->h;i++)
         for(int j=0;j<this->w;j++)
     {
-        if(abs(ray*ray-(x-i)*(x-i)-(y-j)*(y-j))<=2*std::__lg(ray))
+        if(abs(ray*ray-(x-i)*(x-i)-(y-j)*(y-j))<=std::__lg(ray)*std::__lg(ray))
             this->mat[i][j]=ch;
     }
 }
@@ -57,11 +57,11 @@ void Canvas::FillCircle(int x,int y,int ray, char ch)
     for(int i=0;i<this->h;i++)
         for(int j=0;j<this->w;j++)
     {
-        if((x-i)*(x-i)+(y-j)*(y-j)<=ray*ray+2*std::__lg(ray)+1)
+        if((x-i)*(x-i)+(y-j)*(y-j)<=ray*ray+std::__lg(ray)*std::__lg(ray))
             this->mat[i][j]=ch;
     }
 }
-void Canvas::DrawLine(int x1,int x2,int y1,int y2,char ch)
+void Canvas::DrawLine(int x1,int y1,int x2,int y2,char ch)
 {
     if(x1==x2)
         {
@@ -74,7 +74,9 @@ void Canvas::DrawLine(int x1,int x2,int y1,int y2,char ch)
         std::swap(x1,x2);
         std::swap(y1,y2);
     }
+    double xx=x1;
+    double yy=y1;
     double m=(double)(y2-y1)/(double)(x2-x1);
-    for(int i=x1;i<=x2;i++)
-        mat[i][(int)(double(m*(i-x1))+(double)y1)]=ch;
+    for(double i=x1;i<=x2;i++)
+        this->mat[(int)i][(int)(double(m)*(double)(i-xx)+(double)yy)]=ch;
 }
