@@ -31,5 +31,10 @@ int main()
     a.Print();
     a.SetPoint(1,1,'o');
     a.Print();
+    c.DrawCircle(7,8,5,'g');
+    c.Print();
+    Canvas d(50,50);
+    d.DrawCircle(20,20,10,'l');
+    d.Print();
     return 0;
 }
