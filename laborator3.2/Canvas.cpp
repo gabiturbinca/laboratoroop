@@ -48,7 +48,7 @@ void Canvas::DrawCircle(int x,int y,int ray, char ch)
     for(int i=0;i<this->h;i++)
         for(int j=0;j<this->w;j++)
     {
-        if(abs(ray*ray-(x-i)*(x-i)-(y-j)*(y-j))<=2)
+        if(abs(ray*ray-(x-i)*(x-i)-(y-j)*(y-j))<=2*std::__lg(ray))
             this->mat[i][j]=ch;
     }
 }
@@ -57,7 +57,7 @@ void Canvas::FillCircle(int x,int y,int ray, char ch)
     for(int i=0;i<this->h;i++)
         for(int j=0;j<this->w;j++)
     {
-        if(abs((x-i)*(x-i)+(y-j)*(y-j)<=ray*ray+2))
+        if((x-i)*(x-i)+(y-j)*(y-j)<=ray*ray+2*std::__lg(ray)+1)
             this->mat[i][j]=ch;
     }
 }
