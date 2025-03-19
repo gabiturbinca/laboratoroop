@@ -70,10 +70,6 @@ void Sort::InsertSort(bool asc)
         std::swap(v[i],v[n-i-1]);
 
 }
-int compare (const void * a, const void * b)
-{
-  return ( *(int*)a - *(int*)b );
-}
 void Sort::BubbleSort(bool asc)
 {
     bool flag =true;
@@ -88,9 +84,40 @@ void Sort::BubbleSort(bool asc)
     for(int i=0;i<n/2;i++)
         std::swap(v[i],v[n-i-1]);
 }
+int part(int *v,int nr)
+{
+    if(nr==1)
+        return 0;
+    int piv=0;
+    int l=1,r=nr-1;
+    while(l<=r)
+    {
+        if(v[l]<=v[piv])
+            l++;
+        if(v[r]>=v[piv])
+            r--;
+        if(l<r&&v[l]>v[piv]&&v[r]<v[piv])
+        {
+            std::swap(v[l],v[r]);
+            l++;
+            r--;
+        }
+    }
+    piv=l-1;
+    std::swap(v[0],v[piv]);
+    return piv;
+}
+void qs(int *v,int nr)
+{
+    int k=part(v,nr);
+    if(k>1)
+    qs(v,k);
+    if(nr-k+1>1)
+    qs(v+k+1,nr-k-1);
+}
 void Sort::QuickSort(bool asc)
 {
-    qsort(this->v,this->n,sizeof(int),compare);
+    qs(v,n);
     if(!asc)
     for(int i=0;i<n/2;i++)
         std::swap(v[i],v[n-i-1]);
