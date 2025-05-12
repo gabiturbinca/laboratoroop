@@ -6,14 +6,6 @@ using namespace std;
 ifstream fin("date.in");
 
 map <string ,int> mymap;
-bool isletter(char x)
-{
-    if('a'<=x&&x<='z')
-        return 1;
-    if('A'<=x&&'Z'>=x)
-        return 1;
-    return 0;
-}
 string tolower(string x)
 {
     string u;
@@ -42,19 +34,20 @@ int main()
     {
         s=s+line;
     }
-    for(int i=0;i<s.size();i++)
+    string delim=",.?! ";
+    int pozd=0,pozl=0;
+    while(true)
     {
-        if(i<s.size()&&isletter(s[i]))
+        pozl=s.find_first_not_of(delim,pozd);
+        pozd=s.find_first_of(delim,pozl);
+        if(pozl!=string::npos)
         {
-            string aux;
-            while(isletter(s[i]))
-            {
-                aux.push_back(s[i]);
-                i++;
-            }
+            string aux=s.substr(pozl,pozd-pozl);
             aux=tolower(aux);
             mymap[aux]++;
         }
+        else
+            break;
     }
     priority_queue <string,vector <string>,compare> mypq;
     for(auto p:mymap)
